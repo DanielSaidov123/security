@@ -17,3 +17,25 @@ export function signJwt(user) {
 export function verifyJwt(token) {
   return jwt.verify(token, jwtSecret);
 }
+
+
+export const verifyToken = (token) => {
+  try {
+    if (!token) {
+      return { valid: false, error: "No token provided" };
+    }
+
+    const decoded = jwt.verify(token, jwtSecret);
+    console.log(decoded);
+    
+    return {
+      valid: true,
+      data: decoded
+    };
+  } catch (err) {
+    return {
+      valid: false,
+      error: "Invalid or expired token"
+    };
+  }
+};

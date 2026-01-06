@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import { signJwt } from "../utils/auth.js";
+import { signJwt, verifyToken } from "../utils/auth.js";
 const saltRounds = 10;
 
 export const signin = async (req, res) => {
@@ -103,6 +103,22 @@ export const login = async (req, res) => {
     res.status(200).json({
       success: true,
       data: { token },
+      message: "Login successful",
+    });
+  } catch (err) {
+    res.status(500).json({ msg: "error: " + err.message, data: null });
+  }
+};
+  
+
+
+export const verifyd = async (req, res) => {
+  try {
+    const temp = verifyToken(req.body.token)
+    
+    res.status(200).json({
+      success: true,
+      data: temp,
       message: "Login successful",
     });
   } catch (err) {
